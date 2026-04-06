@@ -20,7 +20,7 @@ const CONFIG = {
 
   FRONT_END_PRICE:       '9.99',                // $9.99 — ebook fiyatı
   SUBSCRIPTION_PRICE:    '49.99',               // $49.99 — aylık abonelik
-  TRIAL_DAYS:            7,                     // Ücretsiz deneme süresi (gün)
+  TRIAL_DAYS:            14,                    // Ücretsiz deneme süresi (gün)
 
   PRODUCT_NAME:          '7-Day Monk Reset',    // Ürün adı
   SUBSCRIPTION_NAME:     'Tao Shen Inner Circle',
