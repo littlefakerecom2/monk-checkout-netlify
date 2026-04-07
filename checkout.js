@@ -197,7 +197,8 @@ async function handleTokenResponse(response) {
     if (data.success) {
       // Başarılı — success sayfasına yönlendir
       const email = encodeURIComponent(document.getElementById('email').value.trim());
-      window.location.href = CONFIG.SUCCESS_URL + '?email=' + email;
+      const vip = document.getElementById('vipCheckbox').checked ? '&vip=1' : '';
+      window.location.href = CONFIG.SUCCESS_URL + '?email=' + email + vip;
     } else {
       // Backend'den hata döndü
       showError(data.error || 'Payment failed. Please check your card details and try again.');
