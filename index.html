@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout — Tao Shen</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!--
+    ============================================================
+    Authorize.net Accept.js — Kart bilgilerini güvenli tokenize eder.
+    SANDBOX için: jstest.authorize.net
+    PRODUCTION için (MID onayı gelince): js.authorize.net
+    ============================================================
+  -->
+  <script src="https://jstest.authorize.net/v1/Accept.js" charset="utf-8"></script>
+  <script src="checkout.js" defer></script>
+</head>
+<body>
+
+  <div class="checkout-wrapper">
+
+    <!-- ==============================
+         SOL KOLON — Ödeme Formu
+         ============================== -->
+    <div class="checkout-left">
+
+      <!-- Mağaza başlığı ve geri linki -->
+      <div class="store-header">
+        <a href="https://www.taoshens.com" class="back-link">← Return to store</a>
+        <div class="store-name">Tao Shen</div>
+      </div>
+
+      <!-- BÖLÜM 1: İletişim Bilgisi -->
+      <div class="section">
+        <h3>Contact</h3>
+        <input type="email" id="email" placeholder="Email address" required />
+      </div>
+
+      <!-- BÖLÜM 2: İsim -->
+      <div class="section">
+        <h3>Delivery</h3>
+        <div class="input-row">
+          <input type="text" id="firstName" placeholder="First name" required />
+          <input type="text" id="lastName"  placeholder="Last name"  required />
+        </div>
+        <input type="text" id="country" placeholder="Country / Region" value="United States" />
+      </div>
+
+      <!-- BÖLÜM 3: Ödeme -->
+      <div class="section">
+        <h3>Payment</h3>
+        <p class="section-sub">All transactions are secure and encrypted.</p>
+
+        <!-- Kart logoları -->
+        <div class="card-icons">
+          <img src="https://cdn.jsdelivr.net/npm/payment-icons@1.1.0/min/flat/visa.svg"       alt="Visa" />
+          <img src="https://cdn.jsdelivr.net/npm/payment-icons@1.1.0/min/flat/mastercard.svg" alt="Mastercard" />
+          <img src="https://cdn.jsdelivr.net/npm/payment-icons@1.1.0/min/flat/amex.svg"       alt="Amex" />
+        </div>
+
+        <input type="text" id="cardNumber"  placeholder="Card number"               maxlength="19" />
+        <div class="input-row">
+          <input type="text" id="expiry"    placeholder="Expiration date (MM / YY)" maxlength="7" />
+          <input type="text" id="cvv"       placeholder="Security code"             maxlength="4" />
+        </div>
+        <input type="text"  id="nameOnCard" placeholder="Name on card" />
+      </div>
+
+      <!-- ============================================================
+           BÖLÜM 4: VIP Abonelik Kutusu — Opsiyonel
+           ============================================================ -->
+      <div class="subscription-box">
+
+        <div class="sub-box-header">🌿 Tao Shen Inner Circle — 14-Day Free Trial (Optional)</div>
+
+        <div class="sub-box-content">
+          <label class="checkbox-label">
+            <input type="checkbox" id="vipCheckbox" />
+            <span class="checkbox-custom"></span>
+            <span class="checkbox-text">
+              <strong>Optional:</strong> Add the Tao Shen Inner Circle membership to your order.
+              Enjoy a <strong>14-day free trial</strong> — no charge during this period. After 14 days,
+              <strong>$49.99/month</strong> will be billed to your card
+              automatically until you cancel. Cancel anytime before the trial ends at
+              absolutely no cost.
+              <strong>Full refund guaranteed, no questions asked.</strong>
+              <a href="#terms-modal" class="terms-link" onclick="toggleTerms(event)">
+                View full terms →
+              </a>
+            </span>
+          </label>
+        </div>
+
+        <!-- Inner Circle faydaları -->
+        <div class="sub-benefits">
+          <div class="benefit">✦ Bi-weekly premium wellness PDF &amp; audio lessons</div>
+          <div class="benefit">✦ Ancient healing recipes &amp; breathing techniques</div>
+          <div class="benefit">✦ Exclusive member discounts on all products</div>
+          <div class="benefit">✦ Cancel anytime · Full refund within 3 days of billing date</div>
+        </div>
+
+        <!-- Genişletilebilir tam koşullar metni -->
+        <div class="terms-expanded" id="termsExpanded" style="display:none;">
+          <strong>Tao Shen Inner Circle — Full Terms</strong><br/><br/>
+          By adding the Inner Circle membership to your order, you agree to enroll in the
+          Tao Shen Inner Circle membership program. Your membership includes a
+          14-day free trial period beginning on the date of purchase.
+          No charge will be made to your payment method during the trial period.<br/><br/>
+          After the 14-day trial, your card will be charged <strong>$49.99 per month</strong>
+          on a recurring basis until you cancel. You may cancel at any time by
+          contacting taoshenhelp@outlook.com.
+          Cancellation requests submitted before the end of your current billing
+          period will take effect immediately with no further charges.<br/><br/>
+          We offer a <strong>100% money-back guarantee, no questions asked</strong>,
+          on any subscription charge. Simply contact us within 3 days of the billing date for a full refund.
+        </div>
+
+      </div>
+
+      <!-- Hata mesajı alanı — JS tarafından doldurulur -->
+      <div class="error-message" id="errorMessage" style="display:none;"></div>
+
+      <!-- Sipariş Butonu -->
+      <button class="pay-button" id="payButton" onclick="handleSubmit()">
+        <span   id="payButtonText">Complete order — $9.99</span>
+        <span   id="payButtonSpinner" style="display:none;">Processing... please wait</span>
+      </button>
+
+      <p class="secure-note">🔒 Secure checkout · 256-bit SSL encryption · Powered by Authorize.Net</p>
+
+    </div><!-- /checkout-left -->
+
+
+    <!-- ==============================
+         SAĞ KOLON — Sipariş Özeti
+         ============================== -->
+    <div class="checkout-right">
+      <div class="order-summary">
+
+        <h3>Order Summary</h3>
+
+        <!-- Ürün satırı -->
+        <div class="order-item">
+          <div class="item-image-wrap">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0820/8541/3076/files/Productphoto-Edited.png?v=1774299558"
+              alt="7-Day Monk Reset eBook"
+              class="item-image"
+            />
+            <span class="item-badge">1</span>
+          </div>
+          <div class="item-details">
+            <div class="item-name">7-Day Monk Reset</div>
+            <div class="item-sub">Digital eBook — Instant PDF access</div>
+          </div>
+          <div class="item-price">$9.99</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>$9.99</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span class="free-label">Free</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="summary-row total-row">
+          <span>Total</span>
+          <span>$9.99 USD</span>
+        </div>
+
+        <!-- Inner Circle özeti — tiklenince görünür -->
+        <div class="vip-summary-box" id="vipSummaryBox" style="display:none;">
+          <div class="vip-trial-badge">🎁 14-Day Free Trial Added</div>
+          <p>After trial: <strong>$49.99/month</strong> billed automatically · Cancel anytime</p>
+          <p style="margin-top:6px;font-size:11px;opacity:0.75;">Full refund within 3 days of billing date</p>
+        </div>
+
+      </div>
+    </div><!-- /checkout-right -->
+
+  </div><!-- /checkout-wrapper -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var cb = document.getElementById('vipCheckbox');
+      var box = document.getElementById('vipSummaryBox');
+      if (cb && box) {
+        cb.addEventListener('change', function() {
+          box.style.display = this.checked ? 'block' : 'none';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

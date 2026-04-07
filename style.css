@@ -1,0 +1,453 @@
+/* ============================================================
+   TAO SHEN CHECKOUT — STYLE.CSS
+   Dark earthy tema: Yang Mun sitesiyle aynı dil
+   ============================================================ */
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── DESIGN TOKENS (renk ve font değişkenleri) ── */
+:root {
+  --bg-primary:       #0e0c0a;   /* Ana arka plan — warm black          */
+  --bg-secondary:     #1a1612;   /* Sağ kolon arka planı                */
+  --bg-card:          #211d19;   /* Kutular, kartlar                    */
+  --bg-input:         #181410;   /* Input alanları                      */
+
+  --text-primary:     #f0ebe3;   /* Ana yazı rengi — krem beyaz         */
+  --text-secondary:   #a09080;   /* İkincil yazı — soluk krem           */
+
+  --accent-gold:      #c9a96e;   /* Altın ton — butonlar, vurgular      */
+  --accent-gold-light:#e8c98a;   /* Hover durumu için açık altın        */
+
+  --border-color:     #2e2820;   /* İnce separator çizgiler             */
+  --color-success:    #7ab87a;   /* Yeşil — "Free shipping"             */
+  --color-error:      #c47a7a;   /* Kırmızı — hata mesajları            */
+
+  --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --radius: 8px;
+}
+
+/* ── BASE ── */
+body {
+  background-color: var(--bg-primary);
+  color:            var(--text-primary);
+  font-family:      var(--font-main);
+  font-size:        15px;
+  line-height:      1.65;
+  min-height:       100vh;
+}
+
+/* ============================================================
+   LAYOUT — İki kolon
+   ============================================================ */
+.checkout-wrapper {
+  display:     flex;
+  min-height:  100vh;
+  max-width:   1100px;
+  margin:      0 auto;
+}
+
+/* Sol: form */
+.checkout-left {
+  flex:        1;
+  padding:     48px 40px 60px 48px;
+  max-width:   620px;
+  border-right: 1px solid var(--border-color);
+}
+
+/* Sağ: özet */
+.checkout-right {
+  width:       380px;
+  padding:     48px 36px;
+  background:  var(--bg-secondary);
+}
+
+/* ============================================================
+   STORE HEADER
+   ============================================================ */
+.store-header {
+  display:        flex;
+  flex-direction: column;
+  margin-bottom:  36px;
+}
+
+.back-link {
+  color:           var(--accent-gold);
+  text-decoration: none;
+  font-size:       13px;
+  opacity:         0.8;
+  margin-bottom:   8px;
+  transition:      opacity 0.2s;
+}
+.back-link:hover { opacity: 1; }
+
+.store-name {
+  font-size:   24px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color:       var(--text-primary);
+}
+
+/* ============================================================
+   FORM SECTIONS
+   ============================================================ */
+.section {
+  margin-bottom: 28px;
+}
+
+.section h3 {
+  font-size:      12px;
+  font-weight:    600;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color:          var(--text-secondary);
+  margin-bottom:  12px;
+}
+
+.section-sub {
+  font-size:     12px;
+  color:         var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+/* ============================================================
+   INPUTS
+   ============================================================ */
+input[type="text"],
+input[type="email"] {
+  display:       block;
+  width:         100%;
+  background:    var(--bg-input);
+  border:        1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding:       12px 14px;
+  color:         var(--text-primary);
+  font-size:     15px;
+  margin-bottom: 10px;
+  transition:    border-color 0.2s;
+  outline:       none;
+}
+
+input:focus {
+  border-color: var(--accent-gold);
+}
+
+input::placeholder {
+  color:   var(--text-secondary);
+  opacity: 0.6;
+}
+
+.input-row {
+  display: flex;
+  gap:     10px;
+}
+.input-row input { flex: 1; }
+
+/* Kart logoları */
+.card-icons {
+  display:       flex;
+  gap:           8px;
+  margin-bottom: 12px;
+}
+.card-icons img {
+  height:        24px;
+  border-radius: 3px;
+}
+
+/* ============================================================
+   SUBSCRIPTION BOX — VIP Inner Circle
+   ============================================================ */
+.subscription-box {
+  background:    var(--bg-card);
+  border:        1.5px solid var(--accent-gold);
+  border-radius: 10px;
+  padding:       20px;
+  margin-bottom: 24px;
+}
+
+.sub-box-header {
+  font-size:     15px;
+  font-weight:   700;
+  color:         var(--accent-gold-light);
+  margin-bottom: 14px;
+  letter-spacing: 0.3px;
+}
+
+/* Checkbox label sarmalayıcı */
+.checkbox-label {
+  display:     flex;
+  align-items: flex-start;
+  gap:         12px;
+  cursor:      pointer;
+}
+
+/* Native checkbox'ı gizle */
+.checkbox-label input[type="checkbox"] {
+  position: absolute;
+  opacity:  0;
+  width:    0;
+  height:   0;
+}
+
+/* Özel checkbox kutusu */
+.checkbox-custom {
+  width:      20px;
+  height:     20px;
+  min-width:  20px;
+  border:     2px solid var(--accent-gold);
+  border-radius: 4px;
+  background: transparent;
+  margin-top: 3px;
+  display:    flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+/* İşaretlenince altın dolgu */
+.checkbox-label input:checked ~ .checkbox-custom {
+  background: var(--accent-gold);
+}
+
+/* Tik işareti */
+.checkbox-label input:checked ~ .checkbox-custom::after {
+  content:     '✓';
+  color:       var(--bg-primary);
+  font-size:   12px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.checkbox-text {
+  font-size:   13px;
+  color:       var(--text-secondary);
+  line-height: 1.65;
+}
+.checkbox-text strong { color: var(--text-primary); }
+
+.terms-link {
+  color:           var(--accent-gold);
+  text-decoration: none;
+  font-size:       12px;
+  margin-left:     4px;
+}
+.terms-link:hover { text-decoration: underline; }
+
+/* Inner Circle faydaları listesi */
+.sub-benefits {
+  margin-top:    14px;
+  padding-top:   14px;
+  border-top:    1px solid var(--border-color);
+  display:       flex;
+  flex-direction:column;
+  gap:           7px;
+}
+
+.benefit {
+  font-size: 12px;
+  color:     var(--text-secondary);
+}
+
+/* Checkbox kaldırılınca çıkan uyarı */
+.checkbox-warning {
+  margin-top:    12px;
+  padding:       10px 14px;
+  background:    rgba(196,122,122,0.12);
+  border:        1px solid var(--color-error);
+  border-radius: 6px;
+  color:         var(--color-error);
+  font-size:     13px;
+  line-height:   1.5;
+}
+
+/* Genişletilebilir tam koşullar metni */
+.terms-expanded {
+  margin-top:    14px;
+  padding-top:   14px;
+  border-top:    1px solid var(--border-color);
+  font-size:     12px;
+  color:         var(--text-secondary);
+  line-height:   1.7;
+}
+
+/* ============================================================
+   HATA MESAJI
+   ============================================================ */
+.error-message {
+  background:    rgba(196,122,122,0.12);
+  border:        1px solid var(--color-error);
+  border-radius: var(--radius);
+  padding:       12px 16px;
+  color:         var(--color-error);
+  font-size:     14px;
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   SIPARIŞ BUTONU
+   ============================================================ */
+.pay-button {
+  display:       block;
+  width:         100%;
+  background:    var(--accent-gold);
+  color:         var(--bg-primary);
+  border:        none;
+  border-radius: var(--radius);
+  padding:       16px;
+  font-size:     16px;
+  font-weight:   700;
+  letter-spacing: 0.4px;
+  cursor:        pointer;
+  margin-bottom: 12px;
+  transition:    background 0.2s, transform 0.1s, opacity 0.2s;
+}
+.pay-button:hover:not(:disabled) {
+  background:  var(--accent-gold-light);
+  transform:   translateY(-1px);
+}
+.pay-button:disabled {
+  opacity: 0.55;
+  cursor:  not-allowed;
+  transform: none;
+}
+
+.secure-note {
+  text-align: center;
+  font-size:  12px;
+  color:      var(--text-secondary);
+  opacity:    0.75;
+}
+
+/* ============================================================
+   ORDER SUMMARY (Sağ Kolon)
+   ============================================================ */
+.order-summary h3 {
+  font-size:      12px;
+  font-weight:    600;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color:          var(--text-secondary);
+  margin-bottom:  20px;
+}
+
+.order-item {
+  display:     flex;
+  align-items: center;
+  gap:         14px;
+  margin-bottom: 20px;
+}
+
+.item-image-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.item-image {
+  width:         72px;
+  height:        72px;
+  border-radius: var(--radius);
+  object-fit:    cover;
+  border:        1px solid var(--border-color);
+}
+
+/* Ürün adedi baloncuğu */
+.item-badge {
+  position:    absolute;
+  top:         -8px;
+  right:       -8px;
+  width:       20px;
+  height:      20px;
+  background:  var(--text-secondary);
+  color:       var(--bg-primary);
+  border-radius: 50%;
+  font-size:   11px;
+  font-weight: 700;
+  display:     flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-details { flex: 1; }
+
+.item-name {
+  font-size:   14px;
+  font-weight: 600;
+  color:       var(--text-primary);
+}
+
+.item-sub {
+  font-size:  12px;
+  color:      var(--text-secondary);
+  margin-top: 2px;
+}
+
+.item-price {
+  font-weight: 600;
+  color:       var(--text-primary);
+  font-size:   15px;
+}
+
+/* Ayırıcı çizgi */
+.divider {
+  border:    none;
+  border-top: 1px solid var(--border-color);
+  margin:    16px 0;
+}
+
+.summary-row {
+  display:         flex;
+  justify-content: space-between;
+  font-size:       14px;
+  color:           var(--text-secondary);
+  margin-bottom:   10px;
+}
+
+.total-row {
+  color:     var(--text-primary);
+  font-size: 17px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.free-label { color: var(--color-success); }
+
+/* Inner Circle özet kutusu */
+.vip-summary-box {
+  margin-top:    20px;
+  padding:       14px;
+  background:    var(--bg-card);
+  border:        1px solid var(--accent-gold);
+  border-radius: var(--radius);
+  text-align:    center;
+}
+
+.vip-trial-badge {
+  font-size:   13px;
+  font-weight: 700;
+  color:       var(--accent-gold-light);
+  margin-bottom: 5px;
+}
+
+.vip-summary-box p {
+  font-size: 12px;
+  color:     var(--text-secondary);
+}
+
+/* ============================================================
+   MOBILE — 768px altında tek kolon
+   ============================================================ */
+@media (max-width: 768px) {
+  .checkout-wrapper {
+    flex-direction: column-reverse;
+  }
+  .checkout-right {
+    width:        100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding:      24px 20px;
+  }
+  .checkout-left {
+    padding:   24px 20px 48px;
+    max-width: 100%;
+  }
+}
