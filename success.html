@@ -12,72 +12,34 @@
       padding:    0 24px;
       text-align: center;
     }
-    .success-icon {
-      font-size:     56px;
-      margin-bottom: 20px;
-    }
-    .success-title {
-      font-size:     28px;
-      font-weight:   700;
-      color:         var(--text-primary);
-      margin-bottom: 14px;
-    }
-    .success-sub {
-      font-size:     15px;
-      color:         var(--text-secondary);
-      line-height:   1.7;
-      margin-bottom: 32px;
-    }
+    .success-icon { font-size: 56px; margin-bottom: 20px; }
+    .success-title { font-size: 28px; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; }
+    .success-sub { font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 32px; }
     .success-box {
-      background:    var(--bg-card);
-      border:        1px solid var(--accent-gold);
+      background: var(--bg-card);
+      border: 1px solid var(--accent-gold);
       border-radius: 10px;
-      padding:       24px;
+      padding: 24px;
       margin-bottom: 24px;
-      text-align:    left;
+      text-align: left;
     }
     .success-box h4 {
-      font-size:     13px;
-      font-weight:   600;
-      text-transform:uppercase;
-      letter-spacing:1.2px;
-      color:         var(--text-secondary);
-      margin-bottom: 14px;
+      font-size: 13px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1.2px; color: var(--text-secondary); margin-bottom: 14px;
     }
-    .success-step {
-      display:       flex;
-      align-items:   flex-start;
-      gap:           12px;
-      margin-bottom: 12px;
-    }
+    .success-step { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
     .step-num {
-      width:         24px;
-      height:        24px;
-      min-width:     24px;
-      background:    var(--accent-gold);
-      color:         var(--bg-primary);
-      border-radius: 50%;
-      font-size:     12px;
-      font-weight:   700;
-      display:       flex;
-      align-items:   center;
-      justify-content:center;
+      width: 24px; height: 24px; min-width: 24px;
+      background: var(--accent-gold); color: var(--bg-primary);
+      border-radius: 50%; font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
     }
-    .step-text {
-      font-size:  14px;
-      color:      var(--text-secondary);
-      line-height:1.55;
-    }
+    .step-text { font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
     .home-btn {
-      display:         inline-block;
-      padding:         14px 36px;
-      background:      var(--accent-gold);
-      color:           var(--bg-primary);
-      font-weight:     700;
-      font-size:       15px;
-      border-radius:   var(--radius);
-      text-decoration: none;
-      transition:      background 0.2s;
+      display: inline-block; padding: 14px 36px;
+      background: var(--accent-gold); color: var(--bg-primary);
+      font-weight: 700; font-size: 15px; border-radius: var(--radius);
+      text-decoration: none; transition: background 0.2s;
     }
     .home-btn:hover { background: var(--accent-gold-light); }
   </style>
@@ -86,14 +48,14 @@
   <div class="success-wrapper">
 
     <div class="success-icon">🙏</div>
-
     <h1 class="success-title">Your order is confirmed.</h1>
 
     <p class="success-sub">
       Thank you for your purchase. A download link has been sent to
       <strong id="emailDisplay">your email</strong>.
-      You are now enrolled in the <strong>Tao Shen Inner Circle</strong>
-      7-day free trial.
+      <span class="vip-only" style="display:none;">
+        You are now enrolled in the <strong>Tao Shen Inner Circle</strong> 14-day free trial.
+      </span>
     </p>
 
     <div class="success-box">
@@ -107,27 +69,41 @@
         </span>
       </div>
 
-      <div class="success-step">
+      <div class="success-step vip-only" style="display:none;">
         <span class="step-num">2</span>
         <span class="step-text">
-          <strong>7-day free trial:</strong> Explore the Inner Circle content.
+          <strong>14-day free trial:</strong> Explore the Inner Circle content.
           No charge to your card during this period.
         </span>
       </div>
 
-      <div class="success-step">
+      <div class="success-step vip-only" style="display:none;">
         <span class="step-num">3</span>
         <span class="step-text">
-          <strong>After 7 days:</strong> $49.99/month will be charged if you
-          choose to continue. Cancel anytime by emailing <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="10636560607f62645064717f6378757e633e737f7d">[email&#160;protected]</a>.
+          <strong>After 14 days:</strong> $49.99/month will be charged if you
+          choose to continue. Cancel anytime by emailing taoshenhelp@outlook.com.
         </span>
       </div>
     </div>
 
-    <a href="https://www.taoshens.com" class="home-btn">Return to Tao Shen →</a>
+    <a href="https://www.taoshenswisdom.com" class="home-btn">Return to Tao Shen →</a>
 
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // URL'den email al ve göster: success.html?email=user@example.com
-    const p
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const email  = params.get('email');
+    const vip    = params.get('vip');
+
+    if (email) {
+      document.getElementById('emailDisplay').textContent = decodeURIComponent(email);
+    }
+
+    if (vip === '1') {
+      document.querySelectorAll('.vip-only').forEach(function(el) {
+        el.style.display = '';
+      });
+    }
+  </script>
+</body>
+</html>
