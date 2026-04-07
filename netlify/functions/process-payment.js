@@ -7,7 +7,7 @@ const SHOPIFY_STORE_URL        = process.env.SHOPIFY_STORE_URL;
 const SHOPIFY_ACCESS_TOKEN     = process.env.SHOPIFY_ACCESS_TOKEN;
 
 // Shopify ürün variant ID — Filemonk bu ID ile eşleşiyor
-const SHOPIFY_VARIANT_ID = '47674782744788';
+const SHOPIFY_VARIANT_ID = '44802110717997';
 
 const AUTH_NET_ENDPOINT = AUTH_NET_ENV === 'production'
   ? 'api.authorize.net'
